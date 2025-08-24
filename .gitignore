@@ -1,16 +1,21 @@
 # Python
+venv/
 __pycache__/
 *.pyc
-*.pyo
+
+# Flask
+instance/
+*.db
+*.sqlite3
 
 # Environment
-venv/
 .env
 
-# IDE
-.vscode/
-.idea/
+# Node
+node_modules/
+npm-debug.log
+package-lock.json
 
-# OS
+# Mac / Windows
 .DS_Store
 Thumbs.db
