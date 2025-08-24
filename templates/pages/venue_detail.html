@@ -1,0 +1,71 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Venue · {{ venue.name }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-3">{{ venue.name }}</h1>
+
+<p class="text-muted">
+  {{ venue.address }}, {{ venue.city }}, {{ venue.state }}
+</p>
+
+{% if venue.image_link %}
+  <img src="{{ venue.image_link }}" alt="{{ venue.name }}" class="img-responsive" style="max-width:320px;">
+{% endif %}
+
+<ul class="list-unstyled mt-3">
+  <li><strong>Phone:</strong> {{ venue.phone or '—' }}</li>
+  <li><strong>Genres:</strong> {{ venue.genres|join(', ') }}</li>
+  <li><strong>Facebook:</strong>
+    {% if venue.facebook_link %}
+      <a href="{{ venue.facebook_link }}" target="_blank">{{ venue.facebook_link }}</a>
+    {% else %} — {% endif %}
+  </li>
+  <li><strong>Website:</strong>
+    {% if venue.website_link %}
+      <a href="{{ venue.website_link }}" target="_blank">{{ venue.website_link }}</a>
+    {% else %} — {% endif %}
+  </li>
+  <li><strong>Seeking talent:</strong>
+    {{ 'Yes' if venue.seeking_talent else 'No' }}
+    {% if venue.seeking_talent and venue.seeking_description %}
+      <div class="text-muted">{{ venue.seeking_description }}</div>
+    {% endif %}
+  </li>
+</ul>
+
+<hr>
+
+<h3>Upcoming Shows ({{ upcoming_shows|length }})</h3>
+{% if upcoming_shows %}
+  <ul class="list-unstyled">
+    {% for s in upcoming_shows %}
+      <li class="mb-2">
+        <strong>{{ s.artist.name }}</strong>
+        — {{ s.start_time.strftime('%Y-%m-%d %H:%M') }}
+        · <a href="{{ url_for('show_artist', artist_id=s.artist.id) }}">Artist page</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-muted">No upcoming shows.</p>
+{% endif %}
+
+<h3 class="mt-4">Past Shows ({{ past_shows|length }})</h3>
+{% if past_shows %}
+  <ul class="list-unstyled">
+    {% for s in past_shows %}
+      <li class="mb-2">
+        <strong>{{ s.artist.name }}</strong>
+        — {{ s.start_time.strftime('%Y-%m-%d %H:%M') }}
+        · <a href="{{ url_for('show_artist', artist_id=s.artist.id) }}">Artist page</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-muted">No past shows.</p>
+{% endif %}
+
+<p class="mt-4">
+  <a href="{{ url_for('list_venues') }}" class="btn btn-default">← Back to Venues</a>
+</p>
+{% endblock %}

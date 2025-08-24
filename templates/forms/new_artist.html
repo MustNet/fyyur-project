@@ -1,0 +1,84 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Create Artist{% endblock %}
+
+{% block content %}
+<h1 class="page-header">Create Artist</h1>
+
+{# error banner like on venue form #}
+{% if form.errors %}
+  <div class="alert alert-danger">
+    <strong>Form validation failed.</strong> Please check your input.
+    <ul style="margin-top:6px">
+      {% for field, errs in form.errors.items() %}
+        {% for err in errs %}
+          <li><strong>{{ field|replace('_',' ')|title }}</strong>: {{ err }}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+<form method="post" action="{{ url_for('create_artist_submission') }}" class="form-horizontal">
+  {{ form.csrf_token }}
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.name.label }}</label>
+    <div class="col-sm-10">{{ form.name(class_="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.city.label }}</label>
+    <div class="col-sm-7">{{ form.city(class_="form-control") }}</div>
+    <label class="col-sm-1 control-label">{{ form.state.label }}</label>
+    <div class="col-sm-2">{{ form.state(class_="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.phone.label }}</label>
+    <div class="col-sm-10">{{ form.phone(class_="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.genres.label }}</label>
+    <div class="col-sm-10">
+      {{ form.genres(class_="form-control", multiple=True, size=10) }}
+      <p class="help-block">Hold <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> to select multiple.</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.facebook_link.label }}</label>
+    <div class="col-sm-10">{{ form.facebook_link(class_="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.website_link.label }}</label>
+    <div class="col-sm-10">{{ form.website_link(class_="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.image_link.label }}</label>
+    <div class="col-sm-10">{{ form.image_link(class_="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>{{ form.seeking_venue() }} {{ form.seeking_venue.label.text }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.seeking_description.label }}</label>
+    <div class="col-sm-10">{{ form.seeking_description(class_="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">Create Artist</button>
+      <a href="{{ url_for('list_artists') }}" class="btn btn-default">Cancel</a>
+    </div>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Create Venue{% endblock %}
+
+{% block content %}
+<div class="page-header"><h2>Create Venue</h2></div>
+
+<form method="post" action="{{ url_for('create_venue_submission') }}" class="form-horizontal">
+  {{ form.csrf_token }}
+
+  <div class="form-group">
+    {{ form.name.label(class="col-sm-2 control-label") }}
+    <div class="col-sm-6">{{ form.name(class="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    {{ form.city.label(class="col-sm-2 control-label") }}
+    <div class="col-sm-4">{{ form.city(class="form-control") }}</div>
+    {{ form.state.label(class="col-sm-1 control-label") }}
+    <div class="col-sm-2">{{ form.state(class="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    {{ form.address.label(class="col-sm-2 control-label") }}
+    <div class="col-sm-6">{{ form.address(class="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    {{ form.phone.label(class="col-sm-2 control-label") }}
+    <div class="col-sm-4">{{ form.phone(class="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    {{ form.genres.label(class="col-sm-2 control-label") }}
+    <div class="col-sm-6">
+      {{ form.genres(class="form-control", multiple=true, size=7) }}
+      <span class="help-block">Hold Ctrl / Cmd to select multiple.</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form.facebook_link.label(class="col-sm-2 control-label") }}
+    <div class="col-sm-6">{{ form.facebook_link(class="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    {{ form.website_link.label(class="col-sm-2 control-label") }}
+    <div class="col-sm-6">{{ form.website_link(class="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    {{ form.image_link.label(class="col-sm-2 control-label") }}
+    <div class="col-sm-6">{{ form.image_link(class="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <div class="checkbox">
+        <label>{{ form.seeking_talent() }} {{ form.seeking_talent.label.text }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form.seeking_description.label(class="col-sm-2 control-label") }}
+    <div class="col-sm-8">{{ form.seeking_description(class="form-control") }}</div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button type="submit" class="btn btn-primary">Create Venue</button>
+      <a href="{{ url_for('list_venues') }}" class="btn btn-default">Cancel</a>
+    </div>
+  </div>
+</form>
+{% endblock %}

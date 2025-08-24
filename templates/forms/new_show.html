@@ -1,0 +1,54 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Create Show{% endblock %}
+
+{% block content %}
+<h1 class="page-header">Create Show</h1>
+
+{% if form.errors %}
+  <div class="alert alert-danger">
+    <strong>Form validation failed.</strong> Please check your input.
+    <ul style="margin-top:6px">
+      {% for field, errs in form.errors.items() %}
+        {% for err in errs %}
+          <li><strong>{{ field|replace('_',' ')|title }}</strong>: {{ err }}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+<form method="post" action="{{ url_for('create_show_submission') }}" class="form-horizontal">
+  {{ form.csrf_token }}
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.artist_id.label }}</label>
+    <div class="col-sm-10">
+      {{ form.artist_id(class_="form-control", placeholder="Artist ID") }}
+      <p class="help-block">Enter an existing Artist ID.</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.venue_id.label }}</label>
+    <div class="col-sm-10">
+      {{ form.venue_id(class_="form-control", placeholder="Venue ID") }}
+      <p class="help-block">Enter an existing Venue ID.</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">{{ form.start_time.label }}</label>
+    <div class="col-sm-10">
+      {{ form.start_time(class_="form-control") }}
+      <p class="help-block">Format example: <code>YYYY-mm-dd HH:MM:SS</code></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">Create Show</button>
+      <a href="{{ url_for('list_shows') }}" class="btn btn-default">Cancel</a>
+    </div>
+  </div>
+</form>
+{% endblock %}

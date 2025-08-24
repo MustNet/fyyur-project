@@ -1,0 +1,18 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Venues{% endblock %}
+{% block content %}
+<h1>Venues</h1>
+{% if venues %}
+  <ul>
+    {% for v in venues %}
+      <li>
+        <a href="{{ url_for('show_venue', venue_id=v.id) }}">{{ v.name }}</a>
+        — {{ v.city }}, {{ v.state }}
+        {% if v.genres %}<br><em>{{ v.genres|join(', ') }}</em>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No venues yet. <a href="{{ url_for('create_venue_form') }}">Create one</a>!</p>
+{% endif %}
+{% endblock %}

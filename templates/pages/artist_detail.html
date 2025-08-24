@@ -1,0 +1,50 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Artist · {{ artist.name }}{% endblock %}
+{% block content %}
+<h1>{{ artist.name }}</h1>
+
+<ul class="list-unstyled">
+  <li><strong>City / State:</strong> {{ artist.city }}, {{ artist.state }}</li>
+  <li><strong>Phone:</strong> {{ artist.phone or '—' }}</li>
+  <li><strong>Genres:</strong> {{ artist.genres|join(', ') }}</li>
+  <li><strong>Facebook:</strong>
+    {% if artist.facebook_link %}<a href="{{ artist.facebook_link }}" target="_blank">{{ artist.facebook_link }}</a>{% else %}—{% endif %}
+  </li>
+  <li><strong>Website:</strong>
+    {% if artist.website_link %}<a href="{{ artist.website_link }}" target="_blank">{{ artist.website_link }}</a>{% else %}—{% endif %}
+  </li>
+  <li><strong>Seeking venue:</strong> {{ 'Yes' if artist.seeking_venue else 'No' }}</li>
+  {% if artist.seeking_venue and artist.seeking_description %}
+    <li class="text-muted">{{ artist.seeking_description }}</li>
+  {% endif %}
+</ul>
+
+<hr>
+<h3>Upcoming Shows ({{ upcoming_shows|length }})</h3>
+{% if upcoming_shows %}
+  <ul>
+    {% for s in upcoming_shows %}
+      <li>{{ s.venue.name }} — {{ s.start_time.strftime('%Y-%m-%d %H:%M') }}
+        · <a href="{{ url_for('show_venue', venue_id=s.venue.id) }}">Venue page</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-muted">No upcoming shows.</p>
+{% endif %}
+
+<h3>Past Shows ({{ past_shows|length }})</h3>
+{% if past_shows %}
+  <ul>
+    {% for s in past_shows %}
+      <li>{{ s.venue.name }} — {{ s.start_time.strftime('%Y-%m-%d %H:%M') }}
+        · <a href="{{ url_for('show_venue', venue_id=s.venue.id) }}">Venue page</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-muted">No past shows.</p>
+{% endif %}
+
+<p class="mt-3"><a href="{{ url_for('list_artists') }}">← Back to Artists</a></p>
+{% endblock %}

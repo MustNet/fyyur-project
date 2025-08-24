@@ -1,0 +1,57 @@
+{% extends "layouts/main.html" %}
+{% block title %}Home — Fyyur{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Welcome to <strong>Fyyur</strong> <small>Artists meet venues</small></h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h3>Recently Listed Venues</h3>
+    <ul class="list-group">
+      {% for v in latest_venues %}
+        <li class="list-group-item">
+          <a href="{{ url_for('show_venue', venue_id=v.id) }}">{{ v.name }}</a>
+          <span class="text-muted"> — {{ v.city }}, {{ v.state }}</span>
+        </li>
+      {% else %}
+        <li class="list-group-item">No venues yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="col-sm-6">
+    <h3>Recently Listed Artists</h3>
+    <ul class="list-group">
+      {% for a in latest_artists %}
+        <li class="list-group-item">
+          <a href="{{ url_for('show_artist', artist_id=a.id) }}">{{ a.name }}</a>
+          <span class="text-muted"> — {{ a.city }}, {{ a.state }}</span>
+        </li>
+      {% else %}
+        <li class="list-group-item">No artists yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<h3>Upcoming Shows</h3>
+<table class="table table-striped">
+  <thead>
+    <tr><th>Date</th><th>Artist</th><th>Venue</th><th>Location</th></tr>
+  </thead>
+  <tbody>
+    {% for s in upcoming_shows %}
+      <tr>
+        <td>{{ s.start_time.strftime("%Y-%m-%d %H:%M") }}</td>
+        <td><a href="{{ url_for('show_artist', artist_id=s.artist.id) }}">{{ s.artist.name }}</a></td>
+        <td><a href="{{ url_for('show_venue', venue_id=s.venue.id) }}">{{ s.venue.name }}</a></td>
+        <td>{{ s.venue.city }}, {{ s.venue.state }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4" class="text-muted">No upcoming shows.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

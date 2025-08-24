@@ -1,0 +1,15 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Artists{% endblock %}
+{% block content %}
+<h1>Artists</h1>
+<p><a href="{{ url_for('create_artist_form') }}">+ Create Artist</a></p>
+{% if artists %}
+  <ul>
+    {% for a in artists %}
+      <li><a href="{{ url_for('show_artist', artist_id=a.id) }}">{{ a.name }}</a> — {{ a.city }}, {{ a.state }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-muted">No artists yet.</p>
+{% endif %}
+{% endblock %}

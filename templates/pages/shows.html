@@ -1,0 +1,21 @@
+{% extends "layouts/main.html" %}
+{% block title %}Shows{% endblock %}
+
+{% block content %}
+<h1>Shows</h1>
+
+{% if shows %}
+  <ul>
+    {% for s in shows %}
+      <li>
+        <strong>{{ s.start_time.strftime("%Y-%m-%d %H:%M") }}</strong> —
+        Artist: <a href="{{ url_for('show_artist', artist_id=s.artist.id) }}">{{ s.artist.name }}</a>
+        @ Venue: <a href="{{ url_for('show_venue', venue_id=s.venue.id) }}">{{ s.venue.name }}</a>
+        ({{ s.venue.city }}, {{ s.venue.state }})
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No shows found.</p>
+{% endif %}
+{% endblock %}
