@@ -130,8 +130,6 @@ def create_artist_submission():
 # --- HERE is the explicit JOIN the reviewer asked for ---
 @app.get("/shows")
 def list_shows():
-    # Variante A: explicit JOINs + contains_eager (zeigt dem ORM, dass die Join-Ergebnisse
-    # zu Show.artist / Show.venue gehören)
     shows = (
         db.session.query(Show)
         .join(Artist, Show.artist_id == Artist.id)
